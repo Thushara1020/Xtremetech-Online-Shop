@@ -9,4 +9,6 @@ public interface CategotySevice {
     CategoryResponse add(CategoryRequest request);
 
     List<CategoryResponse> read();
+
+    void delete(String id);
 }

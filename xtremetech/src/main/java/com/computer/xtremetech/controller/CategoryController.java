@@ -6,6 +6,7 @@ import com.computer.xtremetech.service.CategotySevice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,5 +26,15 @@ public class CategoryController {
     @GetMapping
     public List<CategoryResponse> fetchCategories(){
         return categotySevice.read();
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{categoryId}")
+    public void remove(@PathVariable String categoryId){
+        try {
+            categotySevice.delete(categoryId);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 }
