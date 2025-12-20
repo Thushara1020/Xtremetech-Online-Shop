@@ -17,15 +17,15 @@ public class CategoryServiceimpl implements CategotySevice {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public CategoryRequest add(CategoryRequest request) {
+    public CategoryResponse add(CategoryRequest request) {
         CategoryEntity newCategory = convertToEntity(request);
         newCategory = categoryRepository.save(newCategory);
         return convertToResponse(newCategory);
 
     }
 
-    private CategoryRequest convertToResponse(CategoryEntity newCategory) {
-        CategoryResponse.builder()
+    private CategoryResponse convertToResponse(CategoryEntity newCategory) {
+        return CategoryResponse.builder()
                 .categoryId(newCategory.getCategoryId())
                 .name(newCategory.getName())
                 .description(newCategory.getDescription())
@@ -33,8 +33,6 @@ public class CategoryServiceimpl implements CategotySevice {
                 .createdAt(newCategory.getCreatedAt())
                 .updatedAt(newCategory.getUpdateAt())
                 .build();
-
-
     }
 
     private CategoryEntity convertToEntity(CategoryRequest request) {

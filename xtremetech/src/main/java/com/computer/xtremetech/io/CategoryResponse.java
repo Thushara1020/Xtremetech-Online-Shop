@@ -3,7 +3,7 @@ package com.computer.xtremetech.io;
 import lombok.Builder;
 import lombok.Data;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 @Data
 @Builder
