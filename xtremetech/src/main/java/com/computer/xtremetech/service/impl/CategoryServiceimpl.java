@@ -7,6 +7,7 @@ import com.computer.xtremetech.repository.CategoryRepository;
 import com.computer.xtremetech.service.CategotySevice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,12 +19,21 @@ public class CategoryServiceimpl implements CategotySevice {
 
     private final CategoryRepository categoryRepository;
 
+    private final FileUplodeService fileUplodeService;
+
     @Override
-    public CategoryResponse add(CategoryRequest request) {
+    public CategoryResponse add(CategoryRequest request, MultipartFile file) {
+        String imgUrl = fileUplodeService.uploadFile(file);
         CategoryEntity newCategory = convertToEntity(request);
+        newCategory.setImgUrl(imgUrl);
         newCategory = categoryRepository.save(newCategory);
         return convertToResponse(newCategory);
 
+    }
+
+    @Override
+    public CategoryResponse add(CategoryRequest request) {
+        return null;
     }
 
     @Override
@@ -38,6 +48,7 @@ public class CategoryServiceimpl implements CategotySevice {
     public void delete(String categoryId) {
         CategoryEntity existingCategory = categoryRepository.findByCategoryId(categoryId)
                 .orElseThrow(()-> new RuntimeException("Category not found: " + categoryId));
+        fileUplodeService.deleteFile(existingCategory.getImgUrl());
         categoryRepository.delete(existingCategory);
     }
 
