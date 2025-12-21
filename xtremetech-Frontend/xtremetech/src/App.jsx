@@ -1,9 +1,9 @@
-import React from 'react';
+import Menubar from './components/Menubar/Menubar';
 
 const App = () => {
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Welcome to Xtremetech Online Shop</h1>
+    <div>
+      <Menubar />
     </div>
   );
 }
