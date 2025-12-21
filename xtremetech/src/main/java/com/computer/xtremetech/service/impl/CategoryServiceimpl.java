@@ -58,6 +58,7 @@ public class CategoryServiceimpl implements CategotySevice {
                 .name(newCategory.getName())
                 .description(newCategory.getDescription())
                 .bgColor(newCategory.getBgColor())
+                .imgUrl(newCategory.getImgUrl())
                 .createdAt(newCategory.getCreatedAt())
                 .updatedAt(newCategory.getUpdateAt())
                 .build();
