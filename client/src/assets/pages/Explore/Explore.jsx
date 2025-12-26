@@ -20,6 +20,7 @@ const Explore = () => {
                 <div className="cart-items-contaner" style={{height:'55%', overflowY: 'auto'}}>
                     cart items
                 </div>
+                <hr className="my-3 text-light"/>
                 <div className="cart-items-contaner" style={{height:'30%'}}>
                     customer summary
                 </div>
