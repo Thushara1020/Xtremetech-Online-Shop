@@ -5,11 +5,13 @@ import ManageCategory from "./assets/pages/ManageCategory/ManageCategory.jsx";
 import ManageUsers from "./assets/pages/ManageUsers/ManageUsers.jsx";
 import ManageItems from "./assets/pages/ManageItems/ManageItems.jsx";
 import Explore from "./assets/pages/Explore/Explore.jsx";
+import {Toaster} from "react-hot-toast";
 
 const App = () => {
     return (
         <div>
             <Menubar />
+            <Toaster />
             <Routes>
                 <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/category" element={<ManageCategory/>} />
