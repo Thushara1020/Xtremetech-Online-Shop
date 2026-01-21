@@ -1,15 +1,18 @@
 package com.computer.xtremetech.config;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,7 +27,7 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -57,9 +60,17 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+    @Autowired
+    private UserDetailsService appUserDetailsService;
+
     @Bean
     public AuthenticationManager authenticationManager() {
-       DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-       authProvider.setUserDetailsPasswordService();
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(appUserDetailsService);
+
+        authProvider.setUserDetailsService(appUserDetailsService);
+
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return new ProviderManager(authProvider);
     }
 }
