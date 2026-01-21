@@ -1,11 +1,15 @@
-
 package com.computer.xtremetech.repository;
 
-import com.computer.xtremetech.entity.UserEntity; // ඔබේ Entity එකේ නම
+import com.computer.xtremetech.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<UserRepository, Long> {
+@Repository
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
+
     Optional<UserEntity> findByEmail(String email);
+
     Optional<UserEntity> findByUserId(String userId);
 }
